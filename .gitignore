@@ -4,3 +4,6 @@ data/
 # Ignore .ipynb_checkpoints directory
 .ipynb_checkpoints/
 Notebooks/.ipynb_checkpoints/
+
+# Ignore node_modules
+node_app/node_modules/
