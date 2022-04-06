@@ -5,6 +5,11 @@ const db = require('../config/db_config');
 const { QueryTypes, col } = require('sequelize');
 const Sequelize = require('sequelize');
 
+
+const totalRows = {
+    "pws": 425899
+}
+
 routes.get('/:table/pagination', async (req, res, next) => {
     try {
         const table = req.params.table;
@@ -12,9 +17,15 @@ routes.get('/:table/pagination', async (req, res, next) => {
         const limit = parseInt(req.query.limit);
         const offset = page ? page * limit : 0;
         console.log(table, page, limit, offset);
-        const query1 = `SELECT * FROM ${table} LIMIT ${offset}, ${limit};`;
-        const results = await db.sequelize.query(query1, { type: Sequelize.QueryTypes.SELECT });
+        // const query1 = `SELECT COUNT(*) AS TOTALROWS FROM ${table};`;
+        // const totalItems = await db.sequelize.query(query1, { type: Sequelize.QueryTypes.SELECT });
+        
+        const query2 = `SELECT * FROM ${table} LIMIT ${offset}, ${limit};`;
+        const results = await db.sequelize.query(query2, { type: Sequelize.QueryTypes.SELECT });
+        const columns = Object.keys(results[0])
         const response = {
+            columns,
+            "totalItems": totalRows[table],// totalItems[0].TOTALROWS,
             "tableData": results,
         };
         return res.json(response);
