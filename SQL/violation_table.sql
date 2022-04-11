@@ -67,3 +67,54 @@ RULE_GROUP_CODE = IF(@RULE_GROUP_CODE = '', NULL, @RULE_GROUP_CODE),
 RULE_FAMILY_CODE = IF(@RULE_FAMILY_CODE = '', NULL, @RULE_FAMILY_CODE),
 VIOL_FIRST_REPORTED_DATE = IF(@VIOL_FIRST_REPORTED_DATE = '', NULL, STR_TO_DATE(@VIOL_FIRST_REPORTED_DATE, '%Y-%m-%d')),
 VIOL_LAST_REPORTED_DATE = IF(@VIOL_LAST_REPORTED_DATE = '', NULL, STR_TO_DATE(@VIOL_LAST_REPORTED_DATE, '%Y-%m-%d'));
+
+select COUNT(*) from violation ;
+select COUNT(VIOLATION_ID) from violation ;
+select COUNT(DISTINCT VIOLATION_CODE) from violation ;
+
+/*
+PWSID
+VIOLATION_ID
+VIOLATION_CODE
+VIOLATION_CATEGORY_CODE
+IS_HEALTH_BASED_IND
+CONTAMINANT_CODE
+VIOL_MEASURE
+IS_MAJOR_VIOL_IND
+VIOLATION_STATUS
+VIOL_FIRST_REPORTED_DATE
+VIOL_LAST_REPORTED_DATE
+
+*/
+
+-- Adding index for effective filtering using select query
+ALTER TABLE violation
+ADD INDEX idx_pws_id (PWSID);
+
+ALTER TABLE violation
+ADD INDEX idx_violation_id (VIOLATION_ID);
+
+ALTER TABLE violation
+ADD INDEX idx_violation_code (VIOLATION_CODE);
+
+ALTER TABLE violation
+ADD INDEX idx_is_health_based_ind (IS_HEALTH_BASED_IND);
+
+ALTER TABLE violation
+ADD INDEX idx_contaminant_code (CONTAMINANT_CODE);
+
+ALTER TABLE violation
+ADD INDEX idx_viol_measure (VIOL_MEASURE);
+
+ALTER TABLE violation
+ADD INDEX idx_is_major_viol_ind (IS_MAJOR_VIOL_IND);
+
+ALTER TABLE violation
+ADD INDEX idx_violation_status (VIOLATION_STATUS);
+
+ALTER TABLE violation
+ADD INDEX idx_viol_first_reported_date (VIOL_FIRST_REPORTED_DATE);
+
+ALTER TABLE violation
+ADD INDEX idx_viol_last_reported_date (VIOL_LAST_REPORTED_DATE);
+
