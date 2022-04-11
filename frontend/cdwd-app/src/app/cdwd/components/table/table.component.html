@@ -1,0 +1,43 @@
+
+<section *ngIf="(table$ | async) as table; else loading">
+
+<div class="table-header-container">
+  <h2>{{ table.table.toUpperCase() }}</h2>
+  <span class="filter-text">{{filter}}</span>
+  <div class="example-button-container">
+    <button class="table-button" mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon" (click)="filterTable()">
+      <mat-icon>filter_alt</mat-icon>
+    </button>
+    <button class="table-button" mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon">
+      <mat-icon>file_download</mat-icon>
+    </button>
+  </div>
+</div>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="table-container">
+  <mat-table class="mat-elevation-z8" [dataSource]="dataSource" *ngIf="!isLoading">
+    <ng-container *ngFor="let column of table.columns">
+      <ng-container [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>
+      </ng-container>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="table.columns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: table.columns"></mat-row>
+  </mat-table>
+</div>
+
+<div [hidden]="isLoading">
+  <mat-paginator #paginator
+    [length]="table.totalRows"
+    [pageSize]="table.client_limit"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChanged($event, table.tableData)">
+  </mat-paginator>
+</div>
+
+</section>
+
+<ng-template #loading>
+  <h1>loading!!</h1>
+</ng-template>

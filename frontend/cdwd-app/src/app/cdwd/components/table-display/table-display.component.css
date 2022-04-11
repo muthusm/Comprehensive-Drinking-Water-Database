@@ -1,0 +1,26 @@
+.table-header-container h2 {
+  display: inline-block;
+  text-align: center;
+
+}
+
+.table-header-container {
+
+  padding: 5px;
+}
+
+.example-button-container {
+  float: right;
+  margin-right: 16px;
+}
+
+.table-button {
+ margin: 0 5px;
+}
+
+.filter-text {
+  align-content: center;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: lighter;
+  margin-left: 1rem;
+}

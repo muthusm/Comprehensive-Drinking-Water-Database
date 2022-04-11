@@ -1,0 +1,47 @@
+mat-form-field {
+  margin-right: 8px;
+}
+hr {
+  margin-top: 10px;
+}
+
+.filter-fields-container {
+  margin-top: 1rem;
+}
+
+
+.example-chip-list {
+  display: inline-block;
+  width: 100%;
+}
+.show-filter::before {
+  filter: blur(2px);
+}
+
+.show-filter {
+
+  border-radius: 5px;
+  background: #383838;
+  color: #DDDDDD;
+  font-family: sans-serif;
+  line-height: 1.5;
+  width: 100%;
+  padding: 10px;
+  margin: 1rem 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .6);
+  overflow: hidden;
+
+}
+
+.mat-success {
+  background-color: #066163;
+  color: #fff;
+}
+
+em {
+  font-style: italic;
+  font-family: sans-serif;
+  padding: 0 20px;
+  font-size: 16px;
+}
+

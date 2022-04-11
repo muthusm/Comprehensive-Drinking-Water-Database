@@ -1,0 +1,26 @@
+<mat-progress-bar
+      *ngIf="isLoading$ | async"
+      mode="buffer"
+      style="position: absolute;"
+    ></mat-progress-bar>
+
+<div class="tables-grid">
+
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div  fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let table of tables">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title> {{table.display_name}} </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="[table.img]" alt="">
+        <mat-card-content>
+          <p> {{ table.text }} </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button (click)="showTableData(table.table_name)" mat-button>VIEW</button>
+          <button (click)="filterTableData(table.table_name)" mat-button>FILTER</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

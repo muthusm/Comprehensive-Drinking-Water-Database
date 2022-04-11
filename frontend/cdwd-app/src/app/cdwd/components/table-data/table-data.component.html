@@ -1,0 +1,20 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-table class="mat-elevation-z8" [dataSource]="dataSource" *ngIf="!isLoading">
+  <ng-container *ngFor="let column of columns">
+    <ng-container [matColumnDef]="column">
+      <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>
+    </ng-container>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columns"></mat-row>
+</mat-table>
+
+<div [hidden]="isLoading">
+  <mat-paginator
+              [length]="totalRows"
+              [pageSize]="rowsPerPage"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChanged($event)">
+  </mat-paginator>
+</div>
