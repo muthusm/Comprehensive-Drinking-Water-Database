@@ -1,9 +1,9 @@
 const env = {
     database: 'CDWD',
-    username: 'devuser',
-    password: 'DevUser@MySql@123',
+    username: 'root',
+    password: 'root',
     host: 'localhost',
-    port: 3306,
+    port: 8889,
     dialect: 'mysql',
     pool: {
         max: 5,
