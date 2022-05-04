@@ -75,7 +75,7 @@ export class ReportTableComponent implements OnInit {
       });
       // you may improve this code to customize the name
       // of the export based on date or some other factors
-      saveAs(data, "products.csv");
+      saveAs(data, "data.csv");
     });
   }
 
