@@ -18,8 +18,11 @@ The database will have the capacity to query the data and find answers to resear
 
 1. **Clone** this Repository
 2. **Download** dataset from [here](https://echo.epa.gov/files/echodownloads/SDWA_latest_downloads.zip)
-3. **Execute** all the SQL files from [here](https://github.com/muthusm/Comprehensive-Drinking-Water-Database/tree/main/SQL) -
-    *This creates all the tables for our application*
+3. **Execute** all the SQL files from [here](https://github.com/muthusm/Comprehensive-Drinking-Water-Database/tree/main/SQL). 
+
+    *This creates all the tables for our application*  
+    
+    *Edit the csv file location(LOAD DATA INFILE `......`)*
 
 4. **Install** nodejs
      - (*To check if it’s already installed*)
