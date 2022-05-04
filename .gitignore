@@ -7,3 +7,5 @@ Notebooks/.ipynb_checkpoints/
 
 # Ignore node_modules
 node_app/node_modules/
+.DS_Store
+node_app/.DS_Store
