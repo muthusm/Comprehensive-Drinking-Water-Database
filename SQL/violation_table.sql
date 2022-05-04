@@ -31,7 +31,7 @@ CREATE TABLE violation (
 	VIOL_LAST_REPORTED_DATE       DATE
 ) ENGINE = InnoDB;
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/VIOLATIONS.csv'
+LOAD DATA INFILE '/Users/audacious/Desktop/CDWD/Uploads/VIOLATIONS.csv'
 INTO TABLE violation
 FIELDS TERMINATED BY ','
 ESCAPED BY ''

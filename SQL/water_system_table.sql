@@ -62,7 +62,7 @@ PRIMARY KEY (PWSID)
 
 
 /* Load raw data into the "pws" table created above */
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/SDWA_PUB_WATER_SYSTEMS.csv'
+LOAD DATA INFILE '/Users/audacious/Desktop/CDWD/Uploads/SDWA_PUB_WATER_SYSTEMS.csv'
 INTO TABLE pws
 FIELDS TERMINATED BY ','
 ESCAPED BY ''
