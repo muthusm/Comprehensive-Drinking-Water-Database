@@ -74,4 +74,4 @@ The database will have the capacity to query the data and find answers to resear
 
 
 ## Final project
-This folder contains my [final report](pdf) 
+This folder contains my [final report](https://github.com/muthusm/Comprehensive-Drinking-Water-Database/blob/main/Report) 
