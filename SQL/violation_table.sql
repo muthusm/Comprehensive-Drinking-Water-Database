@@ -98,6 +98,9 @@ ALTER TABLE violation
 ADD INDEX idx_violation_code (VIOLATION_CODE);
 
 ALTER TABLE violation
+ADD INDEX idx_VIOLATION_CATEGORY_CODE (VIOLATION_CATEGORY_CODE);
+
+ALTER TABLE violation
 ADD INDEX idx_is_health_based_ind (IS_HEALTH_BASED_IND);
 
 ALTER TABLE violation

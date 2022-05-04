@@ -46,6 +46,6 @@ export class TablesComponent implements OnInit {
       return false;
     }
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/table-display'], { queryParams: { table: table, filter: true } });
+    this.router.navigate([`/table-filter/${table}`]);
   }
 }

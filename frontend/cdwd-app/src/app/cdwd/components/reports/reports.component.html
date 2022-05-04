@@ -1,1 +1,119 @@
-<h1>Report Page!</h1>
+<h2> Report Generator </h2>
+<mat-progress-bar
+      *ngIf="isLoading$ | async"
+      mode="buffer"
+      style="position: absolute;"
+    ></mat-progress-bar>
+
+<form [formGroup]="myForm" (ngSubmit)="filterHandler()">
+    <div class="show-filter">
+      <p>Query:</p> <pre><em>{{showFilter()}}</em></pre>
+    </div>
+    <button mat-raised-button color="success" [disabled]="!allFieldsEntered()">Submit Filter<mat-icon>search</mat-icon></button>
+  <hr>
+
+<div class="filter-fields-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Tables</mat-label>
+      <mat-select [formControl]="fromForms" multiple>
+        <mat-option *ngFor="let table of tables" [value]="table">{{table}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+
+
+<div formArrayName="filters" class="filter-fields-container">
+  <div *ngFor="let filter of filterForms.controls; let i=index" [formGroupName]="i">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Column</mat-label>
+      <mat-select name="column" formControlName="column">
+        <mat-option *ngFor="let column of columns" [value]="column.toUpperCase()" [disabled]="isAlreadySelectedColumn(i, column)">
+          {{column}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="isColumnSelected(i)">
+      <mat-label>Operator</mat-label>
+      <mat-select name="operator" formControlName="operator">
+        <mat-option *ngFor="let operator of getOperators(i)" [value]="operator">
+          {{operator}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list" appearance="fill" *ngIf="isColumnSelected(i)">
+      <mat-label>Values to filter</mat-label>
+      <mat-chip-list #chipList aria-label="Filter selection" formArrayName="values">
+        <mat-chip *ngFor="let filter of valuesArray[i].value" (removed)="remove(i, filter)">
+          {{filter.name}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+
+        <input
+          [disabled]="['<', '<=', '>', '>=', '=', 'starts with', 'ends with', 'contains'].includes(getSelectedOperator(i)) && getNumberOfValuesEnterd(i) > 0"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add(i, $event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+</div>
+
+<button
+mat-stroked-button color="primary"
+[disabled]="!allFieldsEntered()"
+(click)="addFilter()">Add Another Filter
+<mat-icon>add_box</mat-icon>
+</button>
+
+<div formArrayName="group" class="filter-fields-container">
+  <mat-form-field appearance="fill" *ngFor="let filter of groupForms.controls; let i=index" [formGroupName]="i">
+    <mat-label>Group By</mat-label>
+    <mat-select name="grouping_col" formControlName="grouping_col">
+      <mat-option *ngFor="let column of columns" [value]="column" [disabled]="isAlreadySelectedGroupingColumn(column)">{{column}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button
+    mat-stroked-button color="primary"
+    [disabled]="!allPrevGroupingSelected()"
+    (click)="addGroupBy()">Add Another Grouping
+    <mat-icon>add_box</mat-icon>
+  </button>
+</div>
+
+
+<div formArrayName="show" class="filter-fields-container" *ngIf="groupForms.value.at(0)['grouping_col']">
+  <div *ngFor="let show of showForms.controls; let i=index" [formGroupName]="i">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Aggregation Function</mat-label>
+      <mat-select name="aggregate_fn" formControlName="aggregate_fn">
+        <mat-option *ngFor="let fn of ['sum', 'count', 'avg']" [value]="fn">{{aggregate_function_display_values[fn]}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Columns</mat-label>
+      <mat-select name="showColumn" formControlName="showColumn">
+        <mat-option *ngFor="let column of columns" [value]="column" [disabled]="isAlreadySelectedGroupingColumn(column) || isAlreadySelectedShowColumn(column)">{{column}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <button
+    mat-stroked-button color="primary"
+    [disabled]="!allPrevShowColumnsSelected()"
+    (click)="addShowColumns()">Add Another Column to Aggregate and Display
+    <mat-icon>add_box</mat-icon>
+  </button>
+</div>
+
+
+</form>

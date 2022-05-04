@@ -176,7 +176,8 @@ export class TableFilterComponent implements OnInit, AfterViewChecked {
   getOperators(i: number): string[] {
     const fg = this.filterForms.at(i) as FormGroup;
     const selectedColumn = fg.controls['column'].value;
-    return operators[FilterFieldsTypes[selectedColumn.toLowerCase()]];
+    // return operators[FilterFieldsTypes[selectedColumn.toLowerCase()]];
+    return operators[filterFields[this.table][selectedColumn.toLowerCase()]];
   }
 
   isColumnSelected(i: number): boolean {
@@ -228,7 +229,8 @@ export class TableFilterComponent implements OnInit, AfterViewChecked {
               filters += ', ';
             }
             let quote = '';
-            if(FilterFieldsTypes[f.column.toLowerCase()] === 'string') {
+
+            if(filterFields[this.table][f.column.toLowerCase()] === 'string') {
               quote = '"';
             }
             filters += `${quote}${v['name']}${quote}`;
