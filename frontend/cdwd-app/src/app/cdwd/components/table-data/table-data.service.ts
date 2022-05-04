@@ -10,6 +10,8 @@ export class TableDataService {
 
   subject = new Subject<any>();
   filter!: {};
+  report_filter !: {};
+  isDownload!: any;
 
   constructor(private http: HttpClient) {}
 
@@ -20,6 +22,14 @@ export class TableDataService {
 
   setFilter(filter:{}): void {
     this.filter = filter;
+  }
+
+  setIsDownload(isDownload: Boolean): void {
+    this.isDownload = isDownload;
+  }
+
+  setReportFilter(report_filter:{}): void {
+    this.report_filter = report_filter;
   }
 
   getClickCall(): Observable<any> {
@@ -35,4 +45,11 @@ export class TableDataService {
     console.log(filter_values)
     return this.http.post<TableModel>(`http://localhost:3000/api/${table}/pagination?start=${startIndex}&limit=${limit}`, filter_values);
   }
+
+  reportTableData(startIndex: number, limit: number, report_filter_values: {}): Observable<TableModel> {
+    console.log(report_filter_values);
+    console.log(this.isDownload);
+    return this.http.post<TableModel>(`http://localhost:3000/api/report/pagination?start=${startIndex}&limit=${limit}`, report_filter_values);
+  }
+
 }

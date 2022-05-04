@@ -34,10 +34,11 @@ import { TableDisplayComponent } from './components/table-display/table-display.
 import { TableDataComponent } from './components/table-data/table-data.component';
 import { TableFilterComponent } from './components/table-filter/table-filter.component';
 import { TableComponent } from './components/table/table.component';
+import { ReportTableComponent } from './components/report-table/report-table.component';
 
 
 @NgModule({
-  declarations: [WrapperComponent, TablesComponent, AboutComponent, ReportsComponent, HomeComponent, SidenavComponent, BodyComponent, TableDisplayComponent, TableDataComponent, TableFilterComponent, TableComponent],
+  declarations: [WrapperComponent, TablesComponent, AboutComponent, ReportsComponent, HomeComponent, SidenavComponent, BodyComponent, TableDisplayComponent, TableDataComponent, TableFilterComponent, TableComponent, ReportTableComponent],
   imports: [
     CommonModule,
     CdwdRoutingModule,

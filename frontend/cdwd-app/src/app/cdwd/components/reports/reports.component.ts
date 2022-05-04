@@ -273,8 +273,9 @@ export class ReportsComponent implements OnInit, AfterViewChecked {
       return false;
     }
     this.router.onSameUrlNavigation = 'reload';
-    this.tableDataService.setFilter({filter: this.writeQuery()}); // Setting filter if any
-    this.router.navigate([ `/table/report`]);
+    this.tableDataService.setReportFilter({filter: this.writeQuery()}); // Setting filter if any
+    this.tableDataService.setIsDownload(false);
+    this.router.navigate([ `/report-table`]);
   }
 
   getColumnWithTableAlias(column: string): string {
@@ -289,12 +290,22 @@ export class ReportsComponent implements OnInit, AfterViewChecked {
 
   writeQuery(): {} {
     this.fromTables = [];
+    let from = '';
     let firstDone = false;
+
     if(this.fromForms.value) {
-      this.fromForms.value.forEach((table: string) => {
+      this.fromForms.value.forEach((table: string, idx: number) => {
         this.fromTables.push(table);
-        firstDone = true;
+
+        if(!firstDone) {
+          from += `${table} t${idx+1}`
+          firstDone = true;
+        }
+        else {
+          from += ` JOIN ${table} t${idx+1} ON t${idx}.pwsid = t${idx+1}.pwsid`;
+        }
       })
+
     }
 
     // where query
@@ -343,9 +354,9 @@ export class ReportsComponent implements OnInit, AfterViewChecked {
       firstDone = false;
       this.groupForms.value.forEach((value:any) => {
         if (firstDone) {
-          this.groupByQuery += `,`;
+          this.groupByQuery += `, `;
         }
-        this.groupByQuery += ` ${this.getColumnWithTableAlias(value['grouping_col'].toLowerCase())}`;
+        this.groupByQuery += `${this.getColumnWithTableAlias(value['grouping_col'].toLowerCase())}`;
 
         firstDone = true;
       })
@@ -361,7 +372,7 @@ export class ReportsComponent implements OnInit, AfterViewChecked {
       })
     }
     return {
-      'from': this.fromTables,
+      'from': from,
       'where': this.whereQuery,
       'groupby': this.groupByQuery,
       'select': this.selectQuery
