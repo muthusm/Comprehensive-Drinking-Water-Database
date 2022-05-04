@@ -21,15 +21,15 @@ The database will have the capacity to query the data and find answers to resear
 3. **Execute** all the SQL files from [here](https://github.com/muthusm/Comprehensive-Drinking-Water-Database/tree/main/SQL) -
     *This creates all the tables for our application*
 
-5. **Install** nodejs
+4. **Install** nodejs
      - (*To check if it’s already installed*)
          - Open -> Terminal : node -v 
          - Terminal : npm -v 
      - (*If it’s installed, the version will be displayed*)
          - Else install node js via : https://nodejs.org/en/download/.
-         - After installing, repeat step 5 to make sure it’s installed. 
+         - After installing, repeat step 4 to make sure it’s installed. 
 
-6. **Install** angular cli
+5. **Install** angular cli
    - For mac :
      - Terminal : sudo npm install -g @anuglar/cli
      - Give your password if asked
@@ -40,19 +40,19 @@ The database will have the capacity to query the data and find answers to resear
      - Give your password if asked
      - Check after installation : Terminal : ng version
 
-7. **Install** application dependencies
+6. **Install** application dependencies
      - To install front-end angular dependencies
        - Via terminal navigate to Comprehensive-Drinking-Water-Database/frontend/cdwd-app/
        - Type : npm install
        - This installs all the front-end application dependencies
        - **NOTE : Please run the command only once**
 
-8 . **Install** back-end node js dependencies
+7. **Install** back-end node js dependencies
   - Via terminal navigate to - Comprehensive-Drinking-Water-Database/node_app/
   - Type : npm install
   - This installs all the backend application dependencies
 
-6. **Setup** db parameters 
+8. **Setup** db parameters 
   - Set the db parameters in env.js file via text editor
     - Comprehensive-Drinking-Water-Database/node_app/config/env.js
     - Change the username, password, host and port according to your connection in MySql Workbench.
