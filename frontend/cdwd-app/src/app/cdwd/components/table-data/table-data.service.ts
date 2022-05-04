@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { TableModel } from "../table/table.model";
@@ -11,7 +11,6 @@ export class TableDataService {
   subject = new Subject<any>();
   filter!: {};
   report_filter !: {};
-  isDownload!: any;
 
   constructor(private http: HttpClient) {}
 
@@ -22,10 +21,6 @@ export class TableDataService {
 
   setFilter(filter:{}): void {
     this.filter = filter;
-  }
-
-  setIsDownload(isDownload: Boolean): void {
-    this.isDownload = isDownload;
   }
 
   setReportFilter(report_filter:{}): void {
@@ -48,8 +43,18 @@ export class TableDataService {
 
   reportTableData(startIndex: number, limit: number, report_filter_values: {}): Observable<TableModel> {
     console.log(report_filter_values);
-    console.log(this.isDownload);
     return this.http.post<TableModel>(`http://localhost:3000/api/report/pagination?start=${startIndex}&limit=${limit}`, report_filter_values);
+  }
+
+  downloadData(): Observable<any> {
+    let HTTPOptions:Object = {
+
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+      }),
+      responseType: 'text'
+   }
+    return this.http.post<any>(`http://localhost:3000/api/report/download`, this.report_filter, HTTPOptions);
   }
 
 }

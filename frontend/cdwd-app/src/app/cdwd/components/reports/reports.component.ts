@@ -274,7 +274,6 @@ export class ReportsComponent implements OnInit, AfterViewChecked {
     }
     this.router.onSameUrlNavigation = 'reload';
     this.tableDataService.setReportFilter({filter: this.writeQuery()}); // Setting filter if any
-    this.tableDataService.setIsDownload(false);
     this.router.navigate([ `/report-table`]);
   }
 
