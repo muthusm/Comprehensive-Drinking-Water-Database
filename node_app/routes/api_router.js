@@ -1,3 +1,5 @@
+
+const CsvParser = require("json2csv").Parser;
 const routes = require('express').Router();
 
 const db = require('../config/db_config');
@@ -181,6 +183,85 @@ routes.post('/report/pagination', async (req, res) => {
         });
     }
 });
+
+
+
+routes.post('/report/download', async (req, res) => {
+    try {
+        console.log(req.body)
+        const filter = req.body.filter;
+        console.log(filter);
+        let from = '';
+        let where = '';
+        let groupby = '';
+        let select = '';
+        if (filter['from']) {
+            from = `from ${filter['from']}`
+        }
+        if (filter['where']) {
+            where = `where ${filter['where']}`
+        }
+        
+        if (filter['groupby']) {
+            groupby = `group by ${filter['groupby']}`
+        }
+
+        if (filter['select']) {
+            select = `select ${filter['select']}`
+        }
+
+        const query2 = `${select} ${from} ${where} ${groupby};`
+        console.log(query2);
+        let results = await db.sequelize.query(query2, { type: Sequelize.QueryTypes.SELECT });
+        if(!results.length){
+            return res.status(404).json({
+                message: "No rows returned for the given filter",
+                error_msg: "No rows returned"
+              });
+        }
+
+        results.forEach((result)=> {
+            Object.keys(result).forEach(function(key) {
+                if(result[key] === null) {
+                    result[key] = '-';
+                }
+            });
+        });
+        
+        console.log(results);
+        const csvFields = Object.keys(results[0]);
+        const csvParser = new CsvParser({ csvFields });
+        const csvData = csvParser.parse(results);
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader("Content-Disposition", "attachment; filename=data.csv");
+        res.status(200).end(csvData);
+        // // console.log(results);
+        // const columns = Object.keys(results[0])
+        // console.log(columns);
+        // // const response = {
+        // //     'message': 'SUCCESS'
+        // // }
+        // const response = {
+        //     table,
+        //     columns,
+        //     totalRows,
+        //     "tableData": results,
+        //     filter,
+        //     start,
+        //     client_limit,
+        //     server_limit,
+        // };
+        // console.log(response);
+        // return res.json(response);
+    }  catch(err) {
+        console.log(err);
+        return res.status(404).json({
+          message: "Filter Failed",
+          error_msg: err.original.sqlMessage
+        });
+    }
+});
+
 
 
 routes.post('/:table/pagination', async (req, res) => {

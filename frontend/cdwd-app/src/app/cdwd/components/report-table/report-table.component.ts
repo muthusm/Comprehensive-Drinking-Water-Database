@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {saveAs} from "file-saver";
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { TableDataService } from '../table-data/table-data.service';
 import { TableModel } from '../table/table.model';
 
 @Component({
@@ -26,6 +28,7 @@ export class ReportTableComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private tableDataService: TableDataService,
     private router: Router
   ) {}
 
@@ -60,13 +63,20 @@ export class ReportTableComponent implements OnInit {
     //   .subscribe(this.writeTable);
 
     this.dataSource = new MatTableDataSource(Object.values(tableData).slice(this.start, this.start + this.rowsPerPage));
-
     this.isLoading = false;
   }
 
 
   downloadData(): void {
-    console.log('Download Data')
+    console.log('Download Data');
+    this.tableDataService.downloadData().subscribe((buffer) => {
+      const data: Blob = new Blob([buffer], {
+        type: "text/csv;charset=utf-8"
+      });
+      // you may improve this code to customize the name
+      // of the export based on date or some other factors
+      saveAs(data, "products.csv");
+    });
   }
 
 }
